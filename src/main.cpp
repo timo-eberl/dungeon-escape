@@ -83,7 +83,11 @@ void draw(Dungeon &dungeon)
 
 void shutdown()
 {
-    printw("Congratulations, you have escaped the maze!\n");
+    std::string out;
+    out += "Congratulations, you have escaped the maze!\n";
+    out += "Press any key to exit.\n";
+    printw(out.c_str());
     refresh();
+    getch();
     endwin(); // end ncurses mode
 }
