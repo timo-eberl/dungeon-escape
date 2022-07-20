@@ -14,3 +14,5 @@ Use 'w', 'a', 's' and 'd' to move.
  ||||||
  
 ```
+
+Download it from [Releases](https://github.com/timo-eberl/dungeon-escape/releases).
