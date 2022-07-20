@@ -1,5 +1,5 @@
 #include <string>
-#include <ncurses.h>
+#include "console.hpp"
 #include "dungeon.hpp"
 
 void init(Dungeon &dungeon);
@@ -32,15 +32,14 @@ int main(int argc, char *argv[])
 
 void init(Dungeon &dungeon)
 {
-    // init ncurses: character-at-a-time input without echoing
-    initscr(); cbreak(); noecho();
+    console::init();
 
     draw(dungeon);
 }
 
 char waitForInput()
 {
-    return (char)toupper(getch());
+    return toupper(console::getCharacter());
 }
 
 bool update(char input, Dungeon &dungeon)
@@ -69,7 +68,7 @@ bool update(char input, Dungeon &dungeon)
 // prints a tutorial text and the dungeon
 void draw(Dungeon &dungeon)
 {
-    clear();
+    console::clearScreen();
 
     std::string out;
     out += "You are trapped in a maze, find the exit (E)!\n";
@@ -77,8 +76,7 @@ void draw(Dungeon &dungeon)
     out += "Use 'w', 'a', 's' and 'd' to move.\n\n";
     out += dungeon.visibleAreaStr() + '\n';
 
-    printw(out.c_str());
-    refresh();
+    console::print(out);
 }
 
 void shutdown()
@@ -86,8 +84,9 @@ void shutdown()
     std::string out;
     out += "Congratulations, you have escaped the maze!\n";
     out += "Press any key to exit.\n";
-    printw(out.c_str());
-    refresh();
-    getch();
-    endwin(); // end ncurses mode
+
+    console::print(out);
+    console::getCharacter();
+
+    console::close();
 }

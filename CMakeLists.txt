@@ -15,15 +15,17 @@ set(SOURCES
     src/tile_factory.cpp
     src/breakable_wall.cpp
     src/mud.cpp
+    src/console.cpp
 )
-
-find_package(Curses REQUIRED)
 
 add_executable(dungeon-escape
     src/main.cpp
     ${SOURCES}
 )
 
-target_link_libraries(dungeon-escape ${CURSES_LIBRARIES})
+if(UNIX)
+    find_package(Curses REQUIRED)
+    target_link_libraries(dungeon-escape ${CURSES_LIBRARIES})
+endif()
 
 target_include_directories(dungeon-escape PRIVATE include)
